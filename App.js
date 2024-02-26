@@ -1,13 +1,14 @@
-import MessagesScreen from "./app/screens/MessagesScreen";
-import ViewImageScreen from "./app/screens/ViewImageScreen";
+import React, { useState } from "react";
+import { Text, TextInput } from "react-native";
 import Screen from "./app/components/Screen";
-import Icon from "./app/components/Icon";
-import ListItem from "./app/components/ListItem";
-import iconSet from "@expo/vector-icons/build/Fontisto";
-import AccountScreen from "./app/screens/AccountScreen";
+import AppTextInput from "./app/components/AppTextInput";
 
 export default function App() {
+  const [firstName, setFirstName] = useState("");
+
   return (
-    <AccountScreen />
-    );
+    <Screen>
+      <AppTextInput placeholder="Username" icon="email"/>
+    </Screen>
+  );
 }
