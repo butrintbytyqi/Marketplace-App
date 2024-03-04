@@ -4,22 +4,30 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-function ImageInput({ imageAsset }) {
+function ImageInput({ imageAsset, onChangeImage }) {
   const handlePress = () => {
     if (!imageAsset) selectImage();
+    else
+      Alert.alert(
+        "Delete",
+        "Are you sure you want to delete this Image?",
+        [{ text: "Yes", onPress: () => onChangeImage(null) }, { text: "No" }]
+      );
   };
 
   const selectImage = async () => {
     try {
-      const result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.canceled) {
-        setImageAsset(result);
-      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.5,
+      });
+      if (!result.canceled) onChangeImage(result);
     } catch (error) {
       console.log("Error reading an Image", error);
     }
@@ -35,7 +43,7 @@ function ImageInput({ imageAsset }) {
             color={colors.medium}
           />
         )}
-        {imageAsset && (
+        {imageAsset && imageAsset.assets && imageAsset.assets.length > 0 && (
           <Image
             source={{ uri: imageAsset.assets[0].uri }}
             style={styles.image}
