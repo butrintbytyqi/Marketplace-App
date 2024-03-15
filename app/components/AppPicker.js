@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { Button, FlatList, Modal, StyleSheet, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  Modal,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../config/styles";
 import AppText from "./AppText";
-import { TouchableWithoutFeedback } from "react-native";
 import Screen from "./Screen";
 import PickerItem from "./PickerItem";
-
+// import PropTypes from "prop-types";
 
 function AppPicker({
   icon,
@@ -87,5 +93,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+// AppPicker.propTypes = {
+//   icon: PropTypes.string,
+//   items: PropTypes.array.isRequired,
+//   numberOfColumns: PropTypes.number,
+//   onSelectItem: PropTypes.func.isRequired,
+//   PickerItemComponent: PropTypes.elementType,
+//   placeholder: PropTypes.string,
+//   selectedItem: PropTypes.object,
+//   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+// };
 
 export default AppPicker;

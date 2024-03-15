@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormikContext } from "formik";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 import AppPicker from "../AppPicker";
 import ErrorMessage from "./ErrorMessage";
@@ -31,13 +31,13 @@ function AppFormPicker({
   );
 }
 
-AppFormPicker.propTypes = {
-  items: PropTypes.array.isRequired,
-  name: PropTypes.string.isRequired,
-  numberOfColumns: PropTypes.number,
-  PickerItemComponent: PropTypes.elementType,
-  placeholder: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
+// AppFormPicker.propTypes = {
+//   items: PropTypes.array.isRequired,
+//   name: PropTypes.string.isRequired,
+//   numberOfColumns: PropTypes.number,
+//   PickerItemComponent: PropTypes.elementType,
+//   placeholder: PropTypes.string,
+//   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+// };
 
 export default AppFormPicker;

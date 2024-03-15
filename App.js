@@ -7,10 +7,14 @@ import * as ImagePicker from "expo-image-picker";
 import { Button, Image } from "react-native";
 import ImageInput from "./app/components/ImageInput";
 import ImageInputList from "./app/components/ImageInputList";
+import PickerItem from "./app/components/PickerItem";
 // import * as Permissions from "expo-permissions";
 
 export default function App() {
   return (
-    <ListingEditScreen />
+    <>
+      <ListingEditScreen />
+      
+    </>
   );
 }

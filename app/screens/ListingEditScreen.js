@@ -8,6 +8,7 @@ import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppFormPicker from "../components/forms/AppFormPicker";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
+import AppPicker from "../components/AppPicker";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -89,6 +90,7 @@ function ListingEditScreen(props) {
   useEffect(() => {
     getLocation();
   }, []);
+  
   return (
     <Screen style={styles.container}>
       <AppForm
