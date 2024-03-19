@@ -13,6 +13,7 @@
     "@expo/webpack-config": "^19.0.0",
     "@react-native-community/hooks": "^3.0.0",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/bottom-tabs": "^5.11.15",
     "@react-navigation/native": "^5.9.8",
     "@react-navigation/stack": "^5.14.9",
     "@types/react": "~18.2.14",
