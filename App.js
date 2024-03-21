@@ -9,6 +9,7 @@ import Screen from "./app/components/Screen";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import navigationTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigator";
 
 const Tweets = ({ navigation }) => (
   <Screen>
@@ -67,7 +68,7 @@ const TabNavigator = () => (
 export default function App() {
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 }
