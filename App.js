@@ -10,6 +10,7 @@ import AuthNavigator from "./app/navigation/AuthNavigator";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import navigationTheme from "./app/navigation/navigationTheme";
 import AppNavigator from "./app/navigation/AppNavigator";
+import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
 
 const Tweets = ({ navigation }) => (
   <Screen>
