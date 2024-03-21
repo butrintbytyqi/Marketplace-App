@@ -74,7 +74,7 @@ const categories = [
   },
 ];
 
-function ListingEditScreen(props) {
+function ListingEditScreen() {
   const location = useLocation();
 
   return (
@@ -114,7 +114,7 @@ function ListingEditScreen(props) {
           numberOfLines={3}
           placeholder="Description"
         />
-        <SubmitButton title="Post" />
+        <SubmitButton title="Post"/>
       </AppForm>
     </Screen>
   );
