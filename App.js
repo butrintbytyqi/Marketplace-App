@@ -6,12 +6,14 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Screen from "./app/components/Screen";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import RegisterScreen from "./app/screens/RegisterScreen";
 
 const Tweets = ({ navigation }) => (
   <Screen>
     <Text>Tweets</Text>
     <Button
-      title="Click"
+      title="View Details"
       onPress={() => navigation.navigate("TweetDetails", { id: 1 })}
     />
   </Screen>
@@ -24,7 +26,7 @@ const TweetDetails = ({ route }) => (
 );
 
 const Stack = createStackNavigator();
-const StackNavigator = () => (
+const FeedNavigator = () => (
   <Stack.Navigator
     screenOptions={{
       headerStyle: { backgroundColor: "dodgerblue" },
@@ -55,21 +57,8 @@ const Account = () => (
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => (
-  <Tab.Navigator
-    tabBarOptions={{
-      activeBackgroundColor: "tomato",
-      activeTintColor: "white",
-      inactiveBackgroundColor: "#eee",
-      inactiveTintColor: "black",
-    }}
-  >
-    <Tab.Screen
-      name="Feed"
-      component={Tweets}
-      options={{
-        tabBarIcon: ({size, color}) => <MaterialCommunityIcons name="home" size={size} color={color}/>,
-      }}
-    />
+  <Tab.Navigator>
+    <Tab.Screen name="Feed" component={FeedNavigator} />
     <Tab.Screen name="Account" component={Account} />
   </Tab.Navigator>
 );
@@ -77,7 +66,7 @@ const TabNavigator = () => (
 export default function App() {
   return (
     <NavigationContainer>
-      <TabNavigator />
+      <AuthNavigator />
     </NavigationContainer>
   );
 }
