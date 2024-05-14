@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import * as Yup from "yup";
-
 import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppFormPicker from "../components/forms/AppFormPicker";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
+import listingsApi from "../api/listings";
 import useLocation from "../hooks/useLocation";
 
 const validationSchema = Yup.object().shape({
@@ -24,36 +24,16 @@ const categories = [
     label: "Furniture",
     value: 1,
   },
-  {
-    backgroundColor: "#fd9644",
-    icon: "car",
-    label: "Cars",
-    value: 2,
-  },
-  {
-    backgroundColor: "#fed330",
-    icon: "camera",
-    label: "Cameras",
-    value: 3,
-  },
-  {
-    backgroundColor: "#26de81",
-    icon: "cards",
-    label: "Games",
-    value: 4,
-  },
+  { backgroundColor: "#fd9644", icon: "car", label: "Cars", value: 2 },
+  { backgroundColor: "#fed330", icon: "camera", label: "Cameras", value: 3 },
+  { backgroundColor: "#26de81", icon: "cards", label: "Games", value: 4 },
   {
     backgroundColor: "#2bcbba",
     icon: "shoe-heel",
     label: "Clothing",
     value: 5,
   },
-  {
-    backgroundColor: "#45aaf2",
-    icon: "basketball",
-    label: "Sports",
-    value: 6,
-  },
+  { backgroundColor: "#45aaf2", icon: "basketball", label: "Sports", value: 6 },
   {
     backgroundColor: "#4b7bec",
     icon: "headphones",
@@ -66,16 +46,20 @@ const categories = [
     label: "Books",
     value: 8,
   },
-  {
-    backgroundColor: "#778ca3",
-    icon: "application",
-    label: "Other",
-    value: 9,
-  },
+  { backgroundColor: "#778ca3", icon: "application", label: "Other", value: 9 },
 ];
 
 function ListingEditScreen() {
   const location = useLocation();
+
+  const handleSubmit = async (listing) => {
+    const result = await listingsApi.addListing({ ...listing, location });
+    if (!result.ok) {
+      console.log("API Response:", result);
+      return Alert.alert("Error", "Could not save the listing.");
+    }
+    Alert.alert("Success", "Listing saved successfully!");
+  };
 
   return (
     <Screen style={styles.container}>
@@ -87,7 +71,7 @@ function ListingEditScreen() {
           category: null,
           images: [],
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />
@@ -114,7 +98,7 @@ function ListingEditScreen() {
           numberOfLines={3}
           placeholder="Description"
         />
-        <SubmitButton title="Post"/>
+        <SubmitButton title="Post" />
       </AppForm>
     </Screen>
   );

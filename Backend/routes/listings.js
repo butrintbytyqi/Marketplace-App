@@ -17,7 +17,7 @@ const upload = multer({
   limits: { fieldSize: 25 * 1024 * 1024 },
 });
 
-const schema = {
+const schema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow(""),
   price: Joi.number().required().min(1),
@@ -25,8 +25,8 @@ const schema = {
   location: Joi.object({
     latitude: Joi.number().required(),
     longitude: Joi.number().required(),
-  }).optional(),
-};
+  }).required(),
+});
 
 const validateCategoryId = (req, res, next) => {
   if (!categoriesStore.getCategory(parseInt(req.body.categoryId)))
@@ -44,29 +44,33 @@ router.get("/", (req, res) => {
 router.post(
   "/",
   [
-    // Order of these middleware matters.
-    // "upload" should come before other "validate" because we have to handle
-    // multi-part form data. Once the upload middleware from multer applied,
-    // request.body will be populated and we can validate it. This means
-    // if the request is invalid, we'll end up with one or more image files
-    // stored in the uploads folder. We'll need to clean up this folder
-    // using a separate process.
-    // auth,
     upload.array("images", config.get("maxImageCount")),
+    (req, res, next) => {
+      console.log("Received body:", req.body);
+      console.log("Received files:", req.files);
+      if (req.body.location) {
+        try {
+          req.body.location = JSON.parse(req.body.location);
+          console.log("Parsed location:", req.body.location);
+        } catch (error) {
+          return res.status(400).send({ error: "Invalid location format" });
+        }
+      }
+      next();
+    },
     validateWith(schema),
     validateCategoryId,
     imageResize,
   ],
-
   async (req, res) => {
     const listing = {
       title: req.body.title,
       price: parseFloat(req.body.price),
       categoryId: parseInt(req.body.categoryId),
       description: req.body.description,
+      location: req.body.location,
     };
-    listing.images = req.images.map((fileName) => ({ fileName: fileName }));
-    if (req.body.location) listing.location = JSON.parse(req.body.location);
+    listing.images = req.files.map((file) => ({ fileName: file.filename }));
     if (req.user) listing.userId = req.user.userId;
 
     store.addListing(listing);
