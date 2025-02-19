@@ -13,9 +13,15 @@ const compression = require("compression");
 const config = require("config");
 const app = express();
 
-app.use(express.static("public"));
+app.use(express.static("public", { maxAge: "1y" }));
+
+// Configure Helmet with less restrictive options
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+}));
+
 app.use(express.json());
-app.use(helmet());
 app.use(compression());
 
 app.use("/api/categories", categories);

@@ -10,16 +10,15 @@ export default useApi = (apiFunc) => {
     const response = await apiFunc(...args);
     setLoading(false);
 
-    console.log('Full API Response:', response);
+    setError(!response.ok);
+    setData(response.ok ? response.data : []);
 
     if (!response.ok) {
-      console.log('API Error:', response.problem);
-      setError(true);
-      return;
+      console.log('API Error:', response.problem, response.originalError);
+      return response;
     }
 
-    setError(false);
-    setData(response.data);
+    return response;
   };
 
   return { data, error, loading, request };

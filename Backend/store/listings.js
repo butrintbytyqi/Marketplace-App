@@ -104,20 +104,68 @@ const listings = [
   },
 ];
 
+// Get the next available ID
+const getNextId = () => {
+  const maxId = listings.reduce((max, listing) => Math.max(max, listing.id), 0);
+  return maxId + 1;
+};
+
 const addListing = (listing) => {
-  listing.id = listings.length + 1;
+  listing.id = getNextId();
   listings.push(listing);
+  return listing;
 };
 
 const getListings = () => listings;
 
-const getListing = (id) => listings.find((listing) => listing.id === id);
+const getListing = (id) => {
+  const numId = parseInt(id);
+  return listings.find((listing) => listing.id === numId);
+};
 
 const filterListings = (predicate) => listings.filter(predicate);
+
+const updateListing = (id, updatedListing) => {
+  const numId = parseInt(id);
+  const index = listings.findIndex(listing => listing.id === numId);
+  
+  if (index === -1) {
+    console.log(`Listing with id ${id} not found`);
+    return null;
+  }
+  
+  // Preserve the original id and userId
+  const originalListing = listings[index];
+  listings[index] = {
+    ...originalListing,
+    ...updatedListing,
+    id: originalListing.id,
+    userId: originalListing.userId,
+  };
+  
+  console.log(`Updated listing ${id}:`, listings[index]);
+  return listings[index];
+};
+
+const removeListing = (id) => {
+  const numId = parseInt(id);
+  const index = listings.findIndex(listing => listing.id === numId);
+  
+  if (index === -1) {
+    console.log(`Listing with id ${id} not found`);
+    return false;
+  }
+  
+  listings.splice(index, 1);
+  console.log(`Removed listing ${id}`);
+  return true;
+};
 
 module.exports = {
   addListing,
   getListings,
   getListing,
   filterListings,
+  updateListing,
+  removeListing,
 };
